@@ -82,7 +82,14 @@ namespace Tobii
 
         private static long SizeOfFolderSane(string folder)
         {
-            return folder.FlattenHierarchy(Directory.GetDirectories)
+            return folder.AsHierarchy(Directory.GetDirectories).Flatten()
+                .SelectMany(dir => Directory.GetFiles(dir))
+                .Sum(file => new FileInfo(file).Length);
+        }
+
+        private static long SizeOfFolderPerhapsEvenBetter(string folder)
+        {
+            return folder.AsHierarchy(Directory.GetDirectories).Flatten()
                 .SelectMany(dir => Directory.GetFiles(dir))
                 .Sum(file => new FileInfo(file).Length);
         }
