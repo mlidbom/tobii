@@ -57,28 +57,28 @@ namespace Tobii
 
         #region And what's wrong with that?
 
-        // Fetching data, recursive descent tree walking, 
+        // Recursive tree walking, 
         // transforming data, and data aggregation 
         // is all baked into one big mess.
         //
         // Code should do one thing at a time in clear and easy to read steps.        
         //        
         // Wheels reinvented above: 
-        //  Recursive descent tree walking
+        //  Recursive tree walk
         //  Transforming data
         //  Flattening data
         //  Aggregating data
         //
         //In terms of SOLID this translates into violations of;
         //1.SRP since the function is supposed to calculate the size of 
-        //a folder but takes upon itself to implement the wheels above.
+        //a folder but takes upon itself to implement the algorithms above.
         //
         //2. DRY since you are reinventing the wheel time and time again.
         //
 
         #endregion
 
-        #region The right way
+        #region A better way.
 
         private static long SizeOfFolderSane(string folder)
         {

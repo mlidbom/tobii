@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tobii", "Tobii.csproj", "{B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp3", "..\csharpelevate\CSharp3\CSharp3.csproj", "{9FEB6405-34D1-4B63-8E76-00C1C57A01F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAndReactiveExtensions", "WpfAndReactiveExtensions\WpfAndReactiveExtensions.csproj", "{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveDragAndDrop", "..\ReactiveDragAndDrop\ReactiveDragAndDrop.csproj", "{38535BD6-E318-49DA-84D3-B8F3DA741906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,14 @@ Global
 		{9FEB6405-34D1-4B63-8E76-00C1C57A01F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FEB6405-34D1-4B63-8E76-00C1C57A01F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FEB6405-34D1-4B63-8E76-00C1C57A01F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38535BD6-E318-49DA-84D3-B8F3DA741906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38535BD6-E318-49DA-84D3-B8F3DA741906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38535BD6-E318-49DA-84D3-B8F3DA741906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38535BD6-E318-49DA-84D3-B8F3DA741906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
