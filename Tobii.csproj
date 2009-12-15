@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Contracts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=736440c9b414ea16, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -61,8 +62,18 @@
     <Compile Include="010_FunctionalDecompositon.cs" />
     <Compile Include="015_LazynessMakeTheImpossiblePossible.cs" />
     <Compile Include="020_StreamProcessing.cs" />
+    <Compile Include="2DSpace\IPixelPosition.cs" />
+    <Compile Include="2DSpace\IVector2D.cs" />
+    <Compile Include="2DSpace\Vector2D.cs" />
+    <Compile Include="2DSpace\PixelPosition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="030-ReactiveExtensions.cs" />
+    <Compile Include="SpaceTime\IPixelPositionEvent.cs" />
+    <Compile Include="SpaceTime\PixelPositionEvent.cs" />
+    <Compile Include="2DSpace\PixelPositionExtensions.cs" />
+    <Compile Include="Time\Test.cs" />
+    <Compile Include="Time\ITime.cs" />
+    <Compile Include="Time\Time.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
