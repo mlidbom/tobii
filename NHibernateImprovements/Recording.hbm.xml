@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="NHibernateImprovements" namespace="NHibernateImprovements">
+  <typedef class="PointInTimeUserType" name="PointInTime" />
+  
+  <class name="Recording">
+    <id name="Id">
+      <generator  class="assigned" />
+    </id>
+
+    
+    <property name="Start" type="PointInTime" />
+    <property name="End" type="PointInTime" />
+
+  </class>
+</hibernate-mapping>

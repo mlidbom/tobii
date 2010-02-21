@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tobii", "Tobii.csproj", "{BB722EE5-E272-49E7-9F7A-2340A7A57401}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAndReactiveExtensions", "WpfAndReactiveExtensions\WpfAndReactiveExtensions.csproj", "{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NHibernateImprovements", "NHibernateImprovements\NHibernateImprovements.csproj", "{51622997-B65B-4E22-BB5B-55500D4681FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87C08E55-DA5C-4639-9B7C-D37B6E9E2C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51622997-B65B-4E22-BB5B-55500D4681FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51622997-B65B-4E22-BB5B-55500D4681FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51622997-B65B-4E22-BB5B-55500D4681FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51622997-B65B-4E22-BB5B-55500D4681FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
