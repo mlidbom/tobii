@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixation.cs" />
+    <Compile Include="ImmutableSingleColumnUserType.cs" />
     <Compile Include="PointInTime.cs" />
     <Compile Include="PointInTimeUserType.cs" />
     <Compile Include="ProjectRepository.cs" />
