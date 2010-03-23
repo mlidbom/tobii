@@ -9,70 +9,52 @@ namespace WpfAndReactiveExtensions
 {
     public partial class Window1 : Window
     {
-        private SynchronizationContext Context {get;set;}
-        private Point _position = new Point(0, 0);
-
-        private static double AddAbsolutes(double x, double y)
-        {
-            return Math.Abs(x) + Math.Abs(y);
-        }
-
-        private static Point SubtractVectors(Point subtractFrom, Point subtract)
-        {
-            return new Point
-                   {
-                       X = subtractFrom.X - subtract.X,
-                       Y = subtractFrom.Y - subtract.Y
-                   };
-        }
-
-        //Domainspecific name improves readability, and declaring it as a Func 
-        //makes typeinference together with algorithms work!
-        private static readonly Func<Point, Point, Point> MovementBetweenPoints = SubtractVectors;
-
-        private static Point AddMovementDistance(Point movement1, Point movement2)
-        {
-            return new Point
-                   {
-                       X = AddAbsolutes(movement1.X, movement2.X),
-                       Y = AddAbsolutes(movement1.Y, movement2.Y)
-                   };
-        }
-
-        private static bool MovementIsNotZeroLength(Point move)
-        {
-            return move.X != 0 || move.Y != 0;
-        }
+        private Point _lastEyePosition;
 
         public Window1()
         {
             #region scaffolding
 
             InitializeComponent();
-            MouseMove += (_, args) => _position = args.GetPosition(this);
+            MouseMove += (_, args) => _lastEyePosition = args.GetPosition(this);
 
-            Context = Observable.Context = SynchronizationContexts.CurrentDispatcher;
+            Observable.Context = SynchronizationContexts.CurrentDispatcher;
 
-            var eyePositions = Observable.Interval(1).Select(_ => new Point(_position.X, _position.Y));
+            var eyePositions = Observable.Interval(1).Select(_ => _lastEyePosition);
 
             #endregion
 
-            eyePositions.Subscribe(point => currentObservable.Content = point.ToString());
+            eyePositions.Subscribe(point => currentLocation.Content = point);
 
-            var fixations = eyePositions.Where(IsFixated());
+            var fixations = eyePositions.Fixations();
+            var movements = eyePositions.MovementsBetweenPositions();
+            var distance = movements.TotalMovementDistance();
 
-            var movements = eyePositions
-                .Let(ep => ep.Zip(ep.Skip(1), MovementBetweenPoints))
-                .Where(MovementIsNotZeroLength);
+            fixations.Subscribe(point => lastFixation.Content = point);
+            movements.Subscribe(move => lastMovement.Content = move);
+            distance.Subscribe(travelled => distanceTravelled.Content = travelled);
+        }
 
-            var distance = movements.Scan(new Point(0, 0), AddMovementDistance);
+     
+    }
 
-            fixations.Subscribe(point => lastFixatedObservable.Content = point.ToString());
-            movements.Subscribe(move => movementObservable.Content = move);
-            distance.Subscribe(travelled => distanceObservable.Content = travelled);
+    public static class EyeMovement
+    {
+        public static IObservable<Vector> MovementsBetweenPositions(this IObservable<Point> positions)
+        {
+            return positions
+                .ConsecutivePairs((startPoint, destinationPoint) => destinationPoint - startPoint)
+                .Where(movement => movement.Length > 0);
+        }
 
+        public static IObservable<double> TotalMovementDistance(this IObservable<Vector> movements)
+        {
+            return movements.Scan(0.0, (travelled, lastMovement) => travelled + lastMovement.Length);
+        }
 
-            StartEnumerableThreads(eyePositions);
+        public static IObservable<Point> Fixations(this IObservable<Point> eyeMovements)
+        {
+            return eyeMovements.Where(IsFixated());
         }
 
         private static Func<Point, bool> IsFixated()
@@ -80,43 +62,21 @@ namespace WpfAndReactiveExtensions
             const int maxVariance = 10;
             var last10 = new LinkedList<Point>(new Point(0, 0).Repeat(10));
             return currentPosition =>
-                   {
-                       last10.RemoveLast();
-                       last10.AddFirst(currentPosition);
-                       var xVariance = last10.Max(p => p.X) - last10.Min(p => p.X);
-                       var yVariance = last10.Max(p => p.Y) - last10.Min(p => p.Y);
-                       return xVariance < maxVariance && yVariance < maxVariance;
-                   };
+            {
+                last10.RemoveLast();
+                last10.AddFirst(currentPosition);
+                var xVariance = last10.Max(p => p.X) - last10.Min(p => p.X);
+                var yVariance = last10.Max(p => p.Y) - last10.Min(p => p.Y);
+                return xVariance < maxVariance && yVariance < maxVariance;
+            };
         }
+    }
 
-        #region reimplement using Enumerable to illustrate increased difficulty and worse structure
-
-        private void StartEnumerableThreads(IObservable<Point> postions)
+    public static class Sequences
+    {
+        public static IObservable<TSelected> ConsecutivePairs<TSource, TSelected>(this IObservable<TSource> positions, Func<TSource, TSource, TSelected> selector)
         {
-            var eyePositions = postions.ToEnumerable();
-
-            var fixations = eyePositions.Where(IsFixated());
-
-            //I had to create my own let and zip here. Closures are important!
-            var movements = eyePositions
-                .Let(ep => ep.Zip(ep.Skip(0), MovementBetweenPoints))
-                .Where(MovementIsNotZeroLength);
-
-            ThreadPool.QueueUserWorkItem(__ => eyePositions.ForEach(point => Context.Post(_ => currentEnumerable.Content = point, null)));
-            ThreadPool.QueueUserWorkItem(__ => fixations.ForEach(point => Context.Post(_ => lastFixatedEnumerable.Content = point, null)));
-            ThreadPool.QueueUserWorkItem(__ => movements.ForEach(point => Context.Post(_ => movementEnumerable.Content = point, null)));
-
-            //Yikes, that's a handful!
-            ThreadPool.QueueUserWorkItem(
-                __ => movements.Aggregate(
-                          new Point(0, 0), (accumulator, movement) =>
-                                           {
-                                               var dist = AddMovementDistance(accumulator, movement);
-                                               Context.Post(_ => distanceEnumerable.Content = dist, null);
-                                               return dist;
-                                           }));
+            return positions.Zip(positions.Skip(1), selector);
         }
-
-        #endregion
     }
 }

@@ -19,23 +19,18 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="1" Content="IObservable&lt;Point&gt;" />
-            <Label Grid.Row="0" Grid.Column="2" Content="IEnumerable&lt;Point&gt;" />
 
             <Label Grid.Row="1" Grid.Column="0" Content="Current point:" />
-            <Label Grid.Row="1" Grid.Column="1" x:Name="currentObservable" />
-            <Label Grid.Row="1" Grid.Column="2" x:Name="currentEnumerable" />
+            <Label Grid.Row="1" Grid.Column="1" x:Name="currentLocation" />
 
             <Label Grid.Row="2" Grid.Column="0" Content="Last fixation point" />
-            <Label Grid.Row="2" Grid.Column="1" x:Name="lastFixatedObservable" />
-            <Label Grid.Row="2" Grid.Column="2" x:Name="lastFixatedEnumerable" />
+            <Label Grid.Row="2" Grid.Column="1" x:Name="lastFixation" />
 
             <Label Grid.Row="3" Grid.Column="0" Content="Last movement:" />
-            <Label Grid.Row="3" Grid.Column="1" x:Name="movementObservable" />
-            <Label Grid.Row="3" Grid.Column="2" x:Name="movementEnumerable" />
+            <Label Grid.Row="3" Grid.Column="1" x:Name="lastMovement" />
 
             <Label Grid.Row="4" Grid.Column="0" Content="Distance travelled" />
-            <Label Grid.Row="4" Grid.Column="1" x:Name="distanceObservable" />
-            <Label Grid.Row="4" Grid.Column="2" x:Name="distanceEnumerable" />
+            <Label Grid.Row="4" Grid.Column="1" x:Name="distanceTravelled" />
         </Grid>       
     </Canvas>
 </Window>
