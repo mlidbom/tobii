@@ -8,7 +8,7 @@ namespace WpfAndReactiveExtensions.Domain
 {
     public static class EyeMovement
     {
-        public static IObservable<Vector> MovementsBetweenPositions(this IObservable<Point> positions)
+        public static IObservable<Vector> Movements(this IObservable<Point> positions)
         {
             return positions
                 .ConsecutivePairs((startPoint, destinationPoint) => destinationPoint - startPoint)

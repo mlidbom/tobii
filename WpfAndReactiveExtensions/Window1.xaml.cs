@@ -15,10 +15,10 @@ namespace WpfAndReactiveExtensions
             #region scaffolding
 
             InitializeComponent();
+            
             MouseMove += (_, args) => _lastEyePosition = args.GetPosition(this);
 
-            Observable.Context = SynchronizationContexts.CurrentDispatcher;
-
+            Observable.Context = SynchronizationContexts.CurrentDispatcher;//Automatic marshaling of all events to correct context
             var eyePositions = Observable.Interval(TimeSpan.FromMilliseconds(1)).Select(_ => _lastEyePosition);
 
             #endregion
@@ -26,7 +26,7 @@ namespace WpfAndReactiveExtensions
             eyePositions.Subscribe(point => currentLocation.Content = point);
 
             var fixations = eyePositions.Fixations();
-            var movements = eyePositions.MovementsBetweenPositions();
+            var movements = eyePositions.Movements();
             var distance = movements.TotalMovementDistance();
 
             fixations.Subscribe(point => lastFixation.Content = point);
