@@ -1,0 +1,18 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+
+namespace WpfAndReactiveExtensions.Domain
+{
+    public static class FixationReader
+    {
+        public static IEnumerable<Point> Fixations(this IEnumerable<Point> gazePoints, IFixationFilter filter)
+        {
+            return gazePoints.
+                Select(filter.CurrentFixationPosition)
+                .Where(fixation => fixation.HasValue)
+                .Select(fixation => fixation.Value)
+                .RemoveConsecutiveDuplicates();
+        }
+    }
+}
