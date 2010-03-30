@@ -8,11 +8,6 @@ namespace WpfAndReactiveExtensions.Collections
     {
         private readonly LinkedList<T> _list;
 
-        public LimitedLengthList(IEnumerable<T> initialItems)
-        {
-            _list = new LinkedList<T>(initialItems);
-        }
-
         public LimitedLengthList(int count)
         {
             _list = new LinkedList<T>(Enumerable.Repeat(default(T), count));
