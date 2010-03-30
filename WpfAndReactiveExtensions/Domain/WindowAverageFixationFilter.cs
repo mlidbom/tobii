@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using WpfAndReactiveExtensions.Collections;
 
@@ -23,7 +21,7 @@ namespace WpfAndReactiveExtensions.Domain
         {
             _history.Push(currentPosition);
 
-            var currentViewPoint = _history.AveragePointInRange(_windowSize, _windowSize * 2);
+            var currentViewPoint = _history.AveragePointInRange(_windowSize, _windowSize*2);
             if (_fixatedOn.HasValue && WithinTolerance(_fixatedOn.Value, currentViewPoint))
             {
                 return _fixatedOn;
