@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
-namespace WpfAndReactiveExtensions
+namespace WpfAndReactiveExtensions.Linq
 {
     public static class Sequences
     {
         public static IEnumerable<T> RemoveConsecutiveDuplicates<T>(this IEnumerable<T> me)
         {
-            return me.ConsecutivePairs((current, old) => new {current, old})
-                .Where(pair => !pair.old.Equals(pair.current))
-                .Select(pair => pair.current);
-        }
-
-        public static IEnumerable<TSelected> ConsecutivePairs<TSource, TSelected>(this IEnumerable<TSource> positions,
-                                                                                  Func<TSource, TSource, TSelected> selector)
-        {
-            return positions.Zip(positions.Skip(1), selector);
+            using (var enumerator = me.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
+                {
+                    var lastValue = enumerator.Current;
+                    yield return lastValue;
+                    while (enumerator.MoveNext())
+                    {
+                        if (!lastValue.Equals(enumerator.Current))
+                        {
+                            yield return lastValue = enumerator.Current;
+                        }
+                    }
+                }
+            }
         }
     }
 }
