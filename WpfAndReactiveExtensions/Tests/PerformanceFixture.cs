@@ -17,8 +17,8 @@ namespace WpfAndReactiveExtensions.Tests
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            //use 48 hours and show memoryconsumption during work.
-            //Note the linear time scaling.
+            //use 24 and 24*10 hours and note the linear time scaling.
+            //Show memoryconsumption during work.
             const int hours = 4; 
             const int herz = 60;
 
