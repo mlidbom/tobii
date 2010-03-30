@@ -23,13 +23,13 @@ namespace WpfAndReactiveExtensions.Domain
         {
             _history.Push(currentPosition);
 
-            var currentViewPoint = _history.AveragePoint(_windowSize, _windowSize * 2);
+            var currentViewPoint = _history.AveragePointInRange(_windowSize, _windowSize * 2);
             if (_fixatedOn.HasValue && WithinTolerance(_fixatedOn.Value, currentViewPoint))
             {
                 return _fixatedOn;
             }
 
-            var previousWindowViewPoint = _history.AveragePoint(0, _windowSize);
+            var previousWindowViewPoint = _history.AveragePointInRange(0, _windowSize);
             return _fixatedOn = WithinTolerance(previousWindowViewPoint, currentViewPoint)
                                     ? previousWindowViewPoint
                                     : (Point?) null;

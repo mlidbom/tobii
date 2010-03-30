@@ -21,7 +21,7 @@ namespace WpfAndReactiveExtensions.Domain
             return movements.Scan(0.0, (travelled, lastMovement) => travelled + lastMovement.Length);
         }
 
-        public static Point AveragePoint(this LimitedLengthList<Point> points, int startIndex, int endIndex)
+        public static Point AveragePointInRange(this LimitedLengthList<Point> points, int startIndex, int endIndex)
         {
             double xSum = 0.0; 
             double ySum=0.0;
