@@ -9,15 +9,13 @@ namespace WpfAndReactiveExtensions.Domain
     {
         private readonly double _tolerance;
         private readonly LimitedLengthList<Point> _history;
-        private readonly IEnumerable<Point> _currentWindow;
-        private readonly IEnumerable<Point> _previousWindow;
         private Point? _fixatedOn;
+        private readonly int _windowSize;
 
         public WindowAverageFixationFilter(int windowSize, double tolerance)
         {
-            _history = new LimitedLengthList<Point>(windowSize*2);            
-            _previousWindow = _history.Take(windowSize);
-            _currentWindow = _history.Skip(windowSize);
+            _history = new LimitedLengthList<Point>(windowSize*2);
+            _windowSize = windowSize;
             _tolerance = tolerance;
         }
 
@@ -25,13 +23,13 @@ namespace WpfAndReactiveExtensions.Domain
         {
             _history.Push(currentPosition);
 
-            var currentViewPoint = _currentWindow.AveragePoint();
+            var currentViewPoint = _history.AveragePoint(_windowSize, _windowSize * 2);
             if (_fixatedOn.HasValue && WithinTolerance(_fixatedOn.Value, currentViewPoint))
             {
                 return _fixatedOn;
             }
 
-            var previousWindowViewPoint = _previousWindow.AveragePoint();
+            var previousWindowViewPoint = _history.AveragePoint(0, _windowSize);
             return _fixatedOn = WithinTolerance(previousWindowViewPoint, currentViewPoint)
                                     ? previousWindowViewPoint
                                     : (Point?) null;

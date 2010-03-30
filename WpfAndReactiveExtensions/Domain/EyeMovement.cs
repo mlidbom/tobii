@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using WpfAndReactiveExtensions.Collections;
 using WpfAndReactiveExtensions.Linq;
 
 namespace WpfAndReactiveExtensions.Domain
@@ -20,10 +21,20 @@ namespace WpfAndReactiveExtensions.Domain
             return movements.Scan(0.0, (travelled, lastMovement) => travelled + lastMovement.Length);
         }
 
-        public static Point AveragePoint(this IEnumerable<Point> points)
+        public static Point AveragePoint(this LimitedLengthList<Point> points, int startIndex, int endIndex)
         {
-            return new Point((int)points.Average(point => point.X),
-                             (int)points.Average(point => point.Y));
+            double xSum = 0.0; 
+            double ySum=0.0;
+            int items = endIndex - startIndex;
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                var point = points[i];
+                xSum += point.X;
+                ySum += point.Y;
+            }
+            return new Point((int)(xSum / items),
+                             (int)(ySum / items));
         }
     }
 }
