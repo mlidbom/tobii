@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using Void.Linq;
 
 namespace WpfAndReactiveExtensions.Domain
 {
@@ -15,7 +14,7 @@ namespace WpfAndReactiveExtensions.Domain
 
         public WindowAverageFixationFilter(int windowSize, double tolerance)
         {
-            _history = new LinkedList<Point>(new Point(0, 0).Repeat(windowSize*2));
+            _history = new LinkedList<Point>(Enumerable.Repeat(new Point(0, 0), windowSize*2));
             _currentWindow = _history.Skip(windowSize);
             _previousWindow = _history.Take(windowSize);
             _tolerance = tolerance;

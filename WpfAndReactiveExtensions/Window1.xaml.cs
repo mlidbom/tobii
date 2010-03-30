@@ -25,11 +25,13 @@ namespace WpfAndReactiveExtensions
 
             eyePositions.Subscribe(point => currentLocation.Content = point);
 
-            var fixations = eyePositions.Fixations();
+            var fixtationFilter = new WindowAverageFixationFilter(windowSize: 8, tolerance: 30);            
             var movements = eyePositions.Movements();
             var distance = movements.TotalMovementDistance();
 
-            fixations.Subscribe(point => lastFixation.Content = point);
+            var fixationPositions = eyePositions.Select(fixtationFilter.CurrentFixationPosition);
+
+            fixationPositions.Subscribe(point => currentFixationPosition.Content = point);
             movements.Subscribe(move => lastMovement.Content = move);
             distance.Subscribe(travelled => distanceTravelled.Content = travelled);
         }

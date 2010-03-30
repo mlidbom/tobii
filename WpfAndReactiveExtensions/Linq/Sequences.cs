@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Zipping = Void.Linq.Zipping;
 
 namespace WpfAndReactiveExtensions
 {
@@ -17,7 +16,7 @@ namespace WpfAndReactiveExtensions
         public static IEnumerable<TSelected> ConsecutivePairs<TSource, TSelected>(this IEnumerable<TSource> positions,
                                                                                   Func<TSource, TSource, TSelected> selector)
         {
-            return Zipping.Zip(positions, positions.Skip(1), selector);
+            return positions.Zip(positions.Skip(1), selector);
         }
     }
 }
