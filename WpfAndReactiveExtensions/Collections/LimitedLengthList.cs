@@ -6,21 +6,31 @@ namespace WpfAndReactiveExtensions.Collections
 {
     public class LimitedLengthList<T> : IEnumerable<T>
     {
-        private readonly LinkedList<T> _list;
+        private readonly T[] _list;
+        private int currentPosition;
 
         public LimitedLengthList(IEnumerable<T> initialItems)
         {
-            _list = new LinkedList<T>(initialItems);
+            _list = initialItems.ToArray();
         }
 
         public LimitedLengthList(int count)
         {
-            _list = new LinkedList<T>(Enumerable.Repeat(default(T), count));
+            _list = Enumerable.Repeat(default(T), count).ToArray();
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            return _list.GetEnumerator();
+            for (int index = 0; index < _list.Length; index++)
+            {
+                yield return _list[RealIndex(index)];
+            }
+        }
+
+        private int RealIndex(int index)
+        {
+            int realIndex = index + currentPosition;
+            return realIndex < _list.Length ? realIndex : realIndex - _list.Length;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -29,10 +39,18 @@ namespace WpfAndReactiveExtensions.Collections
         }
 
         public void Push(T item)
+        {            
+            _list[currentPosition] = item;
+            ShiftPosition();
+        }
+
+        private void ShiftPosition()
         {
-            _list.RemoveFirst();
-            _list.AddLast(item);
-            return;
+            currentPosition++;
+            if(currentPosition >= _list.Length)
+            {
+                currentPosition = 0;
+            }
         }
     }
 }
