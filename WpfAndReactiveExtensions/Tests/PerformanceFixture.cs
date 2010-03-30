@@ -19,7 +19,7 @@ namespace WpfAndReactiveExtensions.Tests
 
             //use 48 hours and show memoryconsumption during work.
             //Also show profiler result and mention optimization possibilities should they be needed;
-            const int hours = 24; 
+            const int hours = 4; 
             const int herz = 60;
 
             var anHoursWorthOfGazeData = GenerateRandomGazePointWalk(hertz: herz, hours: hours);
